@@ -11,7 +11,7 @@ const ConnectWallet = () => {
   const [selectedWallet, setSelectedWallet] = useState("metamask");
 
   return (
-    <div className="m-12 mt-20 ">
+    <div className="m-8 mt-20 ">
       <div className="flex justify-center">
         <button
           onClick={() => {
@@ -53,7 +53,7 @@ const ConnectWallet = () => {
             </button>
           </div>
           {selectedWallet && (
-            <div className="mt-5 flex space-x-2">
+            <div className="mt-5 flex justify-between">
               <button
                 onClick={() => {
                   setSelectedWallet("");
