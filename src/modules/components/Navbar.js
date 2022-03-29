@@ -1,11 +1,33 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 const Navbar = ({ expanded, setExpanded }) => {
-  const selected = 0;
+  const location = useLocation();
+
+  const findSelected = () => {
+    switch (location.pathname) {
+      case "/":
+        return 0;
+      case "/strategiests":
+        return 1;
+      default:
+        return 1000;
+    }
+  };
+
+  const selected = findSelected();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
 
   return (
     <div className="h-full bg-violet-800 inline-block w-16 center flex flex-col justify-between z-40">
       <div>
-        <div className="flex group justify-center mb-2">
-          <a href="#" className="p-3  ">
+        <div className="flex group justify-center mb-2 cursor-pointer">
+          <a onClick={() => navigate("/")} className="p-3  ">
             <span className="flex flex-col items-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -28,8 +50,8 @@ const Navbar = ({ expanded, setExpanded }) => {
             </span>
           </a>
         </div>
-        <div className="flex group justify-center mb-2">
-          <a href="#" className="p-3  ">
+        <div className="flex group justify-center mb-2 cursor-pointer">
+          <a onClick={() => navigate("/strategiests")} className="p-3  ">
             <span className="flex flex-col items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,13 +74,13 @@ const Navbar = ({ expanded, setExpanded }) => {
             </span>
           </a>
         </div>
-        <div className="flex group justify-center mb-2">
+        <div className="flex group justify-center mb-2 cursor-pointer">
           <a href="#" className="p-3  ">
             <span className="flex flex-col items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={
-                  selected != 1
+                  selected != 2
                     ? `h-6 w-6 duration-200  stroke-gray-100 hover:stroke-yellow-200`
                     : "h-6 w-6 duration-200  stroke-yellow-300"
                 }
@@ -76,7 +98,7 @@ const Navbar = ({ expanded, setExpanded }) => {
             </span>
           </a>
         </div>
-        <div className="flex group justify-center mb-2">
+        <div className="flex group justify-center mb-2 cursor-pointer">
           <a href="#" className="p-3  ">
             <span className="flex flex-col items-center">
               <svg
@@ -87,7 +109,7 @@ const Navbar = ({ expanded, setExpanded }) => {
                 stroke="currentColor"
                 strokeWidth={2}
                 className={
-                  selected != 1
+                  selected != 3
                     ? `h-6 w-6 duration-200  stroke-gray-100 hover:stroke-yellow-200`
                     : "h-6 w-6 duration-200  stroke-yellow-300"
                 }

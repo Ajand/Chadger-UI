@@ -3,19 +3,22 @@ import Mobile from "./modules/layouts/Mobile";
 import chains from "./modules/api/chains";
 import useConnect from "./modules/api/useConnect";
 import { Visible, Hidden } from "react-grid-system";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   console.log(chains);
 
   return (
-    <div class="bg-grey dark:bg-gray-900 w-full h-screen">
-      <Visible xs sm md>
-        <Mobile />
-      </Visible>
-      <Hidden xs sm md>
-        <Desktop />
-      </Hidden> 
-    </div>
+    <BrowserRouter>
+      <div class="bg-grey dark:bg-gray-900 w-full h-screen">
+        <Visible xs sm md>
+          <Mobile />
+        </Visible>
+        <Hidden xs sm md>
+          <Desktop />
+        </Hidden>
+      </div>
+    </BrowserRouter>
   );
 }
 

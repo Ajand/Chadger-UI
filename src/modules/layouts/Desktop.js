@@ -1,7 +1,7 @@
-import CurationSelector from "../curation/CurationSelector";
 import Sidebar from "../components/Sidebar";
 import VaultsTable from "../vault/VaultsTable";
 import VaultFilters from "../vault/VaultFilters";
+import { Routes, Route, Link } from "react-router-dom";
 
 const Desktop = () => {
   return (
@@ -10,10 +10,29 @@ const Desktop = () => {
         <Sidebar />
       </div>
       <div className="w-9/12 inline-block">
-        <div className="m-10">
-          <VaultFilters />
-          <VaultsTable />
-        </div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <div className="m-10">
+                  <VaultFilters />
+                  <VaultsTable />
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/strategiests"
+            element={
+              <>
+                <div className="m-10">
+                  <VaultFilters />
+                </div>
+              </>
+            }
+          />
+        </Routes>
       </div>
     </div>
   );

@@ -17,15 +17,14 @@ const Sidebar = ({ mobile }) => {
           expanded ? "left-16" : "-left-96"
         } `}
       >
-        {expanded &&
-          (connected ? (
-            <>
-              <AccountWidget />
-              <Balances />
-            </>
-          ) : (
-            <ConnectWallet />
-          ))}
+        {connected ? (
+          <>
+            <AccountWidget />
+            <Balances />
+          </>
+        ) : (
+          <ConnectWallet />
+        )}
       </div>
     </div>
   );
