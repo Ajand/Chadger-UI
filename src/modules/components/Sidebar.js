@@ -5,9 +5,9 @@ import AccountWidget from "../wallet/AccountWidget";
 import Balances from "../wallet/Balances";
 
 const Sidebar = ({ mobile }) => {
-  const connected = false;
+  const connected = true;
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(mobile ? false : true);
 
   return (
     <div className={`  h-screen text-gray-light flex z-30 absolute `}>

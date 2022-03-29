@@ -10,13 +10,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div class="bg-grey dark:bg-gray-900 w-full h-screen">
-        <Visible xs sm md>
-          <Mobile />
-        </Visible>
-        <Hidden xs sm md>
-          <Desktop />
-        </Hidden>
+      <div className="dark">
+        <div class="bg-grey dark:bg-gray-900 w-full h-screen ">
+          <Visible xs sm md>
+            <Mobile />
+          </Visible>
+          <Hidden xs sm md>
+            <Desktop />
+          </Hidden>
+        </div>
       </div>
     </BrowserRouter>
   );

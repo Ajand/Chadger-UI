@@ -5,8 +5,10 @@ import Sidebar from "../components/Sidebar";
 import VaultsTable from "../vault/VaultsTable";
 import VaultFilters from "../vault/VaultFilters";
 
-import StrategistsTable from "../strategists/StrategiestsTable";
-import StrategiestFilters from "../strategists/StrategiestFilters";
+import StrategistsTable from "../strategists/StrategistsTable";
+import StrategistFilters from "../strategists/StrategistFilters";
+
+import StrategistInfo from "../strategists/StrategistInfo";
 
 const Desktop = () => {
   return (
@@ -28,12 +30,24 @@ const Desktop = () => {
             }
           />
           <Route
-            path="/strategiests"
+            path="/strategists"
             element={
               <>
                 <div className="m-10">
-                  <StrategiestFilters />
+                  <StrategistFilters />
                   <StrategistsTable />
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/strategist/:address"
+            element={
+              <>
+                <div className="m-10">
+                  <StrategistInfo />
+                  <VaultFilters />
+                  <VaultsTable noStrategist />
                 </div>
               </>
             }

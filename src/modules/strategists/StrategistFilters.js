@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useOuterClick from "../utilities/useOuterClick";
 
-const StrategiestFilters = () => {
+const StrategistFilters = () => {
   const sortOptions = [
     { label: "Vaults", value: "vaults" },
     { label: "TTVL", value: "tvl" },
@@ -78,4 +78,4 @@ const StrategiestFilters = () => {
   );
 };
 
-export default StrategiestFilters;
+export default StrategistFilters;

@@ -8,7 +8,7 @@ const Navbar = ({ expanded, setExpanded }) => {
     switch (location.pathname) {
       case "/":
         return 0;
-      case "/strategiests":
+      case "/strategists":
         return 1;
       default:
         return 1000;
@@ -51,7 +51,7 @@ const Navbar = ({ expanded, setExpanded }) => {
           </a>
         </div>
         <div className="flex group justify-center mb-2 cursor-pointer">
-          <a onClick={() => navigate("/strategiests")} className="p-3  ">
+          <a onClick={() => navigate("/strategists")} className="p-3  ">
             <span className="flex flex-col items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
