@@ -1,6 +1,8 @@
 import CurationSelector from "../curation/CurationSelector";
 import Sidebar from "../components/Sidebar";
 import VaultsTable from "../vault/VaultsTable";
+import VaultFilters from "../vault/VaultFilters"
+
 
 const Desktop = () => {
   return (
@@ -10,7 +12,7 @@ const Desktop = () => {
       </div>
       <div className="w-9/12 inline-block">
         <div className="m-10">
-          <CurationSelector />
+          <VaultFilters />
           <VaultsTable />
         </div>
       </div>
