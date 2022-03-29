@@ -30,7 +30,7 @@ const StrategistInfo = () => {
             className="border-b-2 border-yellow-200 
         mb-6 bg-yellow-300 p-4 py-5 font-mono text-gray-900 text-lg flex justify-between"
           >
-            <p className="mr-10">Total APR</p>
+            <p className="mr-10">Total APY</p>
             <p>1,420%</p>
           </div>
         </div>

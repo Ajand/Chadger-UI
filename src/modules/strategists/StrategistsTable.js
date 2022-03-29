@@ -22,7 +22,7 @@ const StrategistsTable = () => {
               Total TVL
             </th>
             <th scope="col" class="px-6 py-3">
-              Total APR
+              Total APY
             </th>
           </tr>
         </thead>

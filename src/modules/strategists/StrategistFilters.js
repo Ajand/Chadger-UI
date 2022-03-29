@@ -5,7 +5,7 @@ const StrategistFilters = () => {
   const sortOptions = [
     { label: "Vaults", value: "vaults" },
     { label: "TTVL", value: "tvl" },
-    { label: "TAPR", value: "apr" },
+    { label: "TAPY", value: "apy" },
   ];
 
   const [sortBy, setSortBy] = useState("vaults");

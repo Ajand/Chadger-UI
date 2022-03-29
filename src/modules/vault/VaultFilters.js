@@ -4,7 +4,7 @@ import useOuterClick from "../utilities/useOuterClick";
 const VaultFilters = () => {
   const sortOptions = [
     { label: "TVL", value: "tvl" },
-    { label: "APR", value: "apr" },
+    { label: "APY", value: "apy" },
   ];
 
   const [sortBy, setSortBy] = useState("tvl");

@@ -23,7 +23,7 @@ const VaultsTable = ({ noStrategist }) => {
               TVL
             </th>
             <th scope="col" class="px-6 py-3">
-              APR
+              APY
             </th>
             <th scope="col" class="px-6 py-3">
               My Deposits
