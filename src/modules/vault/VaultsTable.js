@@ -1,3 +1,6 @@
+// TODO add pagination
+// TODO add deposits
+
 const VaultsTable = () => {
   return (
     <div class="relative overflow-x-auto shadow-md font-mono">

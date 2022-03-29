@@ -4,11 +4,16 @@ import MetamaskLogo from "../common/MetamaskLogo";
 import EthereumLogo from "../common/EthereumLogo";
 import ArbitrumLogo from "../common/ArbitrumLogo";
 import PolygonLogo from "../common/PolygonLogo";
-import FantomLogo from '../common/FantomLogo'
+import FantomLogo from "../common/FantomLogo";
+
+import useConnect from "../api/useConnect";
+import chains from "../api/chains";
 
 const ConnectWallet = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState("metamask");
+
+  const connector = useConnect();
 
   return (
     <div className="m-8 mt-20 ">
@@ -55,8 +60,13 @@ const ConnectWallet = () => {
           {selectedWallet && (
             <div className="mt-5 flex justify-between">
               <button
-                onClick={() => {
-                  setSelectedWallet("");
+                onClick={async () => {
+                  connector
+                    .requestAccess()
+                    .then((r) => console.log(r))
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 }}
                 class=" border-2  border-violet-300 bg-violet-50 box-border hover:bg-violet-200 duration-200  font-mono py-2 px-2 "
               >
@@ -76,7 +86,7 @@ const ConnectWallet = () => {
                 }}
                 class=" border-2  border-violet-300 bg-violet-50 box-border hover:bg-violet-200 duration-200  font-mono py-2 px-2 "
               >
-                <ArbitrumLogo className="w-8 h-8"  />
+                <ArbitrumLogo className="w-8 h-8" />
               </button>
               <button
                 onClick={() => {

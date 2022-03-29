@@ -4,7 +4,7 @@ import AccountWidget from "../wallet/AccountWidget";
 import Balances from "../wallet/Balances";
 
 const Sidebar = () => {
-  const connected = true;
+  const connected = false;
 
   return (
     <div className="w-full bg-violet-900 h-screen text-gray-light flex">
