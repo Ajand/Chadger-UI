@@ -1,7 +1,12 @@
+import { Routes, Route, Link } from "react-router-dom";
+
 import Sidebar from "../components/Sidebar";
+
 import VaultsTable from "../vault/VaultsTable";
 import VaultFilters from "../vault/VaultFilters";
-import { Routes, Route, Link } from "react-router-dom";
+
+import StrategistsTable from "../strategists/StrategiestsTable";
+import StrategiestFilters from "../strategists/StrategiestFilters";
 
 const Desktop = () => {
   return (
@@ -27,7 +32,8 @@ const Desktop = () => {
             element={
               <>
                 <div className="m-10">
-                  <VaultFilters />
+                  <StrategiestFilters />
+                  <StrategistsTable />
                 </div>
               </>
             }
