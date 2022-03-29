@@ -10,6 +10,8 @@ const Navbar = ({ expanded, setExpanded }) => {
         return 0;
       case "/strategists":
         return 1;
+      case "/add-vault":
+        return 2;
       default:
         return 1000;
     }
@@ -75,24 +77,24 @@ const Navbar = ({ expanded, setExpanded }) => {
           </a>
         </div>
         <div className="flex group justify-center mb-2 cursor-pointer">
-          <a href="#" className="p-3  ">
+          <a onClick={() => navigate("/add-vault")} className="p-3  ">
             <span className="flex flex-col items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
                 className={
                   selected != 2
                     ? `h-6 w-6 duration-200  stroke-gray-100 hover:stroke-yellow-200`
                     : "h-6 w-6 duration-200  stroke-yellow-300"
                 }
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                  d="M12 4v16m8-8H4"
                 />
               </svg>
             </span>
@@ -103,7 +105,6 @@ const Navbar = ({ expanded, setExpanded }) => {
             <span className="flex flex-col items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -139,7 +140,6 @@ const Navbar = ({ expanded, setExpanded }) => {
             <span className="flex flex-col items-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

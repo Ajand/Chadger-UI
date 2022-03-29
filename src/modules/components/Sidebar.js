@@ -10,7 +10,7 @@ const Sidebar = ({ mobile }) => {
   const [expanded, setExpanded] = useState(mobile ? false : true);
 
   return (
-    <div className={`  h-screen text-gray-light flex z-30 absolute `}>
+    <div className={`  h-screen text-gray-light flex z-30 fixed  `}>
       <Navbar setExpanded={setExpanded} expanded={expanded} />
       <div
         className={`inline-block bg-violet-900 h-full duration-200 ease-in w-80 z-20 absolute ${
@@ -30,4 +30,4 @@ const Sidebar = ({ mobile }) => {
   );
 };
 
-export default Sidebar;
+export default Sidebar

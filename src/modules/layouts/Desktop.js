@@ -10,13 +10,15 @@ import StrategistFilters from "../strategists/StrategistFilters";
 
 import StrategistInfo from "../strategists/StrategistInfo";
 
+import AddVault from "../vault/AddVault";
+
 const Desktop = () => {
   return (
-    <div className="flex">
-      <div className="w-3/12 inline-block">
+    <div className="flex ">
+      <div className="w-3/12 inline-block ">
         <Sidebar />
       </div>
-      <div className="w-9/12 inline-block">
+      <div className="w-9/12 inline-block ">
         <Routes>
           <Route
             path="/"
@@ -48,6 +50,17 @@ const Desktop = () => {
                   <StrategistInfo />
                   <VaultFilters />
                   <VaultsTable noStrategist />
+                </div>
+              </>
+            }
+          />
+
+          <Route
+            path="/add-vault"
+            element={
+              <>
+                <div className="m-10  ">
+                  <AddVault />
                 </div>
               </>
             }

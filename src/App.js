@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="dark">
-        <div class="bg-grey dark:bg-gray-900 w-full h-screen ">
+        <div class="bg-grey dark:bg-gray-900 w-full min-h-fit ">
           <Visible xs sm md>
             <Mobile />
           </Visible>
