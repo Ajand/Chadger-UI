@@ -1,8 +1,7 @@
 import CurationSelector from "../curation/CurationSelector";
 import Sidebar from "../components/Sidebar";
 import VaultsTable from "../vault/VaultsTable";
-import VaultFilters from "../vault/VaultFilters"
-
+import VaultFilters from "../vault/VaultFilters";
 
 const Desktop = () => {
   return (

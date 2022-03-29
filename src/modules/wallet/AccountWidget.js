@@ -5,36 +5,11 @@ import ArbitrumLogo from "../common/ArbitrumLogo";
 import PolygonLogo from "../common/PolygonLogo";
 import FantomLogo from "../common/FantomLogo";
 
-
-const useOuterClick = (callback) => {
-  const callbackRef = useRef(); // initialize mutable ref, which stores callback
-  const innerRef = useRef(); // returned to client, who marks "border" element
-
-  // update cb on each render, so second useEffect has access to current value
-  useEffect(() => {
-    callbackRef.current = callback;
-  });
-
-  useEffect(() => {
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-    function handleClick(e) {
-      if (
-        innerRef.current &&
-        callbackRef.current &&
-        !innerRef.current.contains(e.target)
-      )
-        callbackRef.current(e);
-    }
-  }, []); // no dependencies -> stable click listener
-
-  return innerRef; // convenience for client (doesn't need to init ref himself)
-};
+import useOuterClick from "../utilities/useOuterClick";
 
 const AccountWidget = () => {
   const walletAddress = "0x4A87a2A017Be7feA0F37f03F3379d43665486Ff8";
   const ens = "ajand.eth";
-
 
   const [network, setNetwork] = useState("mainnet");
 

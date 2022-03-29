@@ -13,7 +13,7 @@ const Sidebar = ({ mobile }) => {
     <div className={`  h-screen text-gray-light flex z-30 absolute `}>
       <Navbar setExpanded={setExpanded} expanded={expanded} />
       <div
-        className={`inline-block bg-violet-900 h-full duration-200 w-80 z-20 absolute ${
+        className={`inline-block bg-violet-900 h-full duration-200 ease-in w-80 z-20 absolute ${
           expanded ? "left-16" : "-left-96"
         } `}
       >
