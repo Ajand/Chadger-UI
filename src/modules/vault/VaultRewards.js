@@ -1,4 +1,4 @@
-const VaultRewards = () => {
+const VaultRewards = ({ vault }) => {
   return (
     <div className="mt-4">
       <div className="text-violet-800 dark:text-yellow-300 font-mono text-lg">
@@ -22,34 +22,19 @@ const VaultRewards = () => {
           </tr>
         </thead>
         <tbody>
-          <tr
-            //onClick={() => navigate(`/strategist/${strategistAddress}`)}
-            class="bg-white text-xs border-t  dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
-          >
-            <th
-              scope="row"
-              class="px-6 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-            >
-              Gold
-            </th>
-            <td class="px-6 py-3">15</td>
-            <td class="px-6 py-3">$56,238</td>
-            <td class="px-6 py-3">1,560%</td>
-          </tr>
-          <tr
-            //onClick={() => navigate(`/strategist/${strategistAddress}`)}
-            class="bg-white text-xs border-t dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
-          >
-            <th
-              scope="row"
-              class="px-6 py-3  font-medium text-gray-900 dark:text-white whitespace-nowrap"
-            >
-              Silver
-            </th>
-            <td class="px-6 py-3">15</td>
-            <td class="px-6 py-3">$56,238</td>
-            <td class="px-6 py-3">1,560%</td>
-          </tr>
+          {vault.apyReports.map((tk) => (
+            <tr class="bg-white text-xs border-t  dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
+              <th
+                scope="row"
+                class="px-6 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+              >
+                {tk.token.symbol}
+              </th>
+              <td class="px-6 py-3">{String(tk.amount)}</td>
+              <td class="px-6 py-3">${String(tk.usd)}</td>
+              <td class="px-6 py-3">{parseInt(String(tk.apy)) / 100}%</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

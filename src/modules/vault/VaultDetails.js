@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ethers } from "ethers";
+import axios from "axios";
+import ChadgerRegistry from "../api/Contracts/ChadgerRegistry.json";
 import { Col, Row } from "react-grid-system";
 
 import VaultInfo from "./VaultInfo";
@@ -10,14 +14,41 @@ import BasicActions from "./BasicActions";
 import YourRoles from "./YourRoles";
 import RoleActions from "./RoleActions";
 
-const VaultDetails = () => {
+const VaultDetails = ({ network }) => {
   const [tab, setTab] = useState(0);
+
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [vault, setVault] = useState(null);
+
+  useEffect(async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+
+    const chadgerAddress = network.registryAddress;
+    const cCo = new ethers.Contract(
+      chadgerAddress,
+      ChadgerRegistry.abi,
+      signer
+    );
+
+    const signerAddress = await signer.getAddress();
+
+    setVault(await cCo.getVaultDetails(id, signerAddress));
+
+    setLoading(false);
+  }, []);
+
+  if (loading) return <div>Loading ...</div>;
+
+  console.log(vault);
 
   return (
     <div>
       <Row>
         <Col lg={8}>
-          <VaultInfo />
+          <VaultInfo vault={vault} />
         </Col>
         <Col lg={4}>
           <BasicActions />
@@ -30,8 +61,8 @@ const VaultDetails = () => {
               <VaultTabs tab={tab} setTab={setTab} />
               {tab === 0 && (
                 <>
-                  <VaultBasics />
-                  <VaultRewards />
+                  <VaultBasics vault={vault} network={network} />
+                  <VaultRewards vault={vault} network={network} />
                 </>
               )}
             </Col>

@@ -1,6 +1,10 @@
 import { Col, Row } from "react-grid-system";
 
-const VaultInfo = () => {
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const VaultInfo = ({ vault }) => {
   return (
     <>
       <Row>
@@ -9,7 +13,7 @@ const VaultInfo = () => {
             Vault Name:
           </div>
           <div className="text-violet-900 dark:text-yellow-300 font-mono text-2xl">
-            To the Moon
+            {vault.name} | {vault.symbol}
           </div>
         </Col>
       </Row>
@@ -24,7 +28,7 @@ const VaultInfo = () => {
                 justify-between basis-1/3 "
             >
               <p className="mr-10"> TVL</p>
-              <p>54,320$</p>
+              <p> ${numberWithCommas(parseInt(String(vault.tvl)))}</p>
             </div>
             <div
               className="
@@ -34,7 +38,14 @@ const VaultInfo = () => {
               items-center flex justify-between basis-1/3"
             >
               <p className="mr-10"> APY</p>
-              <p>1,420%</p>
+              <p>
+                {numberWithCommas(
+                  vault.apyReports.reduce((pV, cV) => {
+                    return pV + parseInt(String(cV.apy));
+                  }, 0)
+                )}
+                %
+              </p>
             </div>
             <div
               className="
@@ -43,7 +54,7 @@ const VaultInfo = () => {
                 text-gray-200 text-lg items-center flex justify-between basis-1/3"
             >
               <p className="mr-10">Deposits</p>
-              <p>1,420%</p>
+              <p> ${numberWithCommas(parseInt(String(vault.deposits.usd)))}</p>
             </div>
           </div>
         </Col>

@@ -26,6 +26,7 @@ const Desktop = () => {
 
   const network = {
     blockExplorer: "https://etherscan.io",
+    registryAddress: "0x9d4454B023096f34B160D6B654540c56A1F81688",
   };
 
   useEffect(async () => {
@@ -36,7 +37,7 @@ const Desktop = () => {
 
     const signer = provider.getSigner();
 
-    const chadgerAddress = "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB";
+    const chadgerAddress = network.registryAddress;
     const cCo = new ethers.Contract(
       chadgerAddress,
       ChadgerRegistry.abi,
@@ -111,7 +112,7 @@ const Desktop = () => {
               element={
                 <>
                   <div className="m-10  ">
-                    <VaultDetails />
+                    <VaultDetails network={network} />
                   </div>
                 </>
               }
