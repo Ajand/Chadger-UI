@@ -7,6 +7,8 @@ import VaultBasics from "./VaultBasics";
 import VaultRewards from "./VaultRewards";
 
 import BasicActions from "./BasicActions";
+import YourRoles from "./YourRoles";
+import RoleActions from "./RoleActions";
 
 const VaultDetails = () => {
   const [tab, setTab] = useState(0);
@@ -34,6 +36,10 @@ const VaultDetails = () => {
               )}
             </Col>
           </Row>
+        </Col>
+        <Col lg={4}>
+          <YourRoles />
+          <RoleActions />
         </Col>
       </Row>
     </div>
