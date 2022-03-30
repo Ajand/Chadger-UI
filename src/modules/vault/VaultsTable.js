@@ -1,12 +1,35 @@
 import { useNavigate } from "react-router-dom";
-
 // TODO add pagination
 // TODO add deposits
 
-const VaultsTable = ({ noStrategist }) => {
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const beautifyAddress = (address) =>
+  `${address.substring(0, 6)}...${address.substring(
+    address.length - 6,
+    address.length
+  )}`;
+
+const VaultsTable = ({ noStrategist, vaults, network }) => {
   const navigate = useNavigate();
 
   const vaultId = "123";
+
+  const formattedVaults = vaults.map((vault) => ({
+    apyReports: vault["apyReports"],
+    deposits: vault["deposits"],
+    name: vault["name"],
+    symbol: vault["symbol"],
+    strategist: vault["strategist"],
+    token: vault["token"],
+    tvl: vault["tvl"],
+    vaultAddress: vault["vaultAddress"],
+    status: vault["status"],
+  }));
+
+  console.log(formattedVaults);
 
   return (
     <div class="relative overflow-x-auto shadow-md font-mono">
@@ -40,39 +63,61 @@ const VaultsTable = ({ noStrategist }) => {
           </tr>
         </thead>
         <tbody>
-          <tr
-            onClick={() => navigate(`/vault/${vaultId}`)}
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer "
-          >
-            {!noStrategist && (
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-              >
-                ajand.eth
-              </th>
-            )}
+          {formattedVaults.map((fV) => (
+            <tr
+              onClick={() => navigate(`/vault/${fV.vaultAddress}`)}
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer "
+            >
+              {!noStrategist && (
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+                >
+                  {beautifyAddress(fV.strategist)}
+                </th>
+              )}
 
-            <td class="px-6 py-4">wBTC</td>
-            <td class="px-6 py-4">wBTC</td>
-            <td class="px-6 py-4">$56,238</td>
-            <td class="px-6 py-4">1,560%</td>
-            <td class="px-6 py-4">$1283</td>
-            <td class="px-6 pt-3.5 flex justify-center items-end">
-              <button
-                type="button"
-                class="text-white text-center bg-blue-700 hover:bg-blue-800  text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600  focus:outline-none "
-              >
-                Deposit
-              </button>
-              <button
-                type="button"
-                class="text-white text-center bg-blue-700 hover:bg-blue-800  text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600  focus:outline-none "
-              >
-                Withdraw
-              </button>
-            </td>
-          </tr>
+              <td class="px-6 py-4">
+                {fV.name} | {fV.symbol}
+              </td>
+              <td class="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+                <a
+                  href={`${network.blockExplorer}/address/${fV.token.tokenAddress}`}
+                  target="_blank"
+                  class="text-blue-700"
+                >
+                  {fV.token.symbol}
+                </a>
+              </td>
+              <td class="px-6 py-4">
+                ${numberWithCommas(parseInt(String(fV.tvl)))}
+              </td>
+              <td class="px-6 py-4">
+                {numberWithCommas(
+                  fV.apyReports.reduce((pV, cV) => {
+                    return pV + parseInt(String(cV.apy));
+                  }, 0)
+                )}%
+              </td>
+              <td class="px-6 py-4">
+                ${numberWithCommas(parseInt(String(fV.deposits.usd)))}
+              </td>
+              <td class="px-6 pt-3.5 flex justify-center items-end">
+                <button
+                  type="button"
+                  class="text-white text-center bg-blue-700 hover:bg-blue-800  text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600  focus:outline-none "
+                >
+                  Deposit
+                </button>
+                <button
+                  type="button"
+                  class="text-white text-center bg-blue-700 hover:bg-blue-800  text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600  focus:outline-none "
+                >
+                  Withdraw
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -21,10 +21,6 @@ const Navbar = ({ expanded, setExpanded }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
-
   return (
     <div className="h-full bg-violet-800 inline-block w-16 center flex flex-col justify-between z-40">
       <div>
