@@ -1,11 +1,22 @@
 import { Col, Row } from "react-grid-system";
+import { useParams } from "react-router-dom";
 
-const StrategistInfo = () => {
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const StrategistInfo = ({ strategists }) => {
   const beautifyAddress = (address) =>
     `${address.substring(0, 10)}...${address.substring(
       address.length - 10,
       address.length
     )}`;
+
+  const { address } = useParams();
+
+  const strategist = strategists.find((str) => str.strategist == address);
+
+  console.log(strategist);
 
   return (
     <Row>
@@ -24,14 +35,37 @@ const StrategistInfo = () => {
         ml-8 mb-6 bg-blue-600 p-4 py-5 font-mono text-gray-100 text-lg flex justify-between"
           >
             <p className="mr-10">Total TVL</p>
-            <p>54,320$</p>
+            <p>
+              {numberWithCommas(
+                strategist.vaults.reduce((pV, cV) => {
+                  return (
+                    pV +
+                    cV.apyReports.reduce((pV, cV) => {
+                      return pV + parseInt(String(cV.apy));
+                    }, 0)
+                  );
+                }, 0)
+              )}
+              $
+            </p>
           </div>
           <div
             className="border-b-2 border-yellow-200 
         mb-6 bg-yellow-300 p-4 py-5 font-mono text-gray-900 text-lg flex justify-between"
           >
-            <p className="mr-10">Total APY</p>
-            <p>1,420%</p>
+            <p className="mr-10">MAX APY</p>
+            <p>
+              {numberWithCommas(
+                strategist.vaults
+                  .map((vault) =>
+                    vault.apyReports.reduce((pV, cV) => {
+                      return pV + parseInt(String(cV.apy));
+                    }, 0)
+                  )
+                  .sort((a, b) => b - a)[0]
+              )}
+              %
+            </p>
           </div>
         </div>
       </Col>

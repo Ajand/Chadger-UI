@@ -21,12 +21,13 @@ import ChadgerRegistry from "../api/Contracts/ChadgerRegistry.json";
 
 const Desktop = () => {
   const [vaultsSummary, setVS] = useState([]);
+  const [strategists, setStrategists] = useState([]);
   const [loadingVaults, setLoadingVaults] = useState(true);
   const [registry, setRegistry] = useState(null);
 
   const network = {
     blockExplorer: "https://etherscan.io",
-    registryAddress: "0x9d4454B023096f34B160D6B654540c56A1F81688",
+    registryAddress: "0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8",
   };
 
   useEffect(async () => {
@@ -47,6 +48,11 @@ const Desktop = () => {
     setRegistry(cCo);
 
     setVS(await cCo.getVaultsSummary(await signer.getAddress()));
+
+    const sgs = await cCo.getAllStrategistsWithVaults(
+      await signer.getAddress()
+    );
+    setStrategists(sgs);
 
     setLoadingVaults(false);
   }, []);
@@ -78,7 +84,10 @@ const Desktop = () => {
                 <>
                   <div className="m-10">
                     <StrategistFilters />
-                    <StrategistsTable />
+                    <StrategistsTable
+                      strategists={strategists}
+                      network={network}
+                    />
                   </div>
                 </>
               }
@@ -88,9 +97,13 @@ const Desktop = () => {
               element={
                 <>
                   <div className="m-10">
-                    <StrategistInfo />
+                    <StrategistInfo strategists={strategists} />
                     <VaultFilters />
-                    <VaultsTable noStrategist />
+                    <VaultsTable
+                      noStrategist
+                      strategists={strategists}
+                      network={network}
+                    />
                   </div>
                 </>
               }

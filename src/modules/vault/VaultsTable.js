@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // TODO add pagination
 // TODO add deposits
 
@@ -12,12 +12,17 @@ const beautifyAddress = (address) =>
     address.length
   )}`;
 
-const VaultsTable = ({ noStrategist, vaults, network }) => {
+const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
   const navigate = useNavigate();
+  const { address } = useParams();
 
   const vaultId = "123";
 
-  const formattedVaults = vaults.map((vault) => ({
+  const targetVaults = strategists
+    ? strategists.find((str) => str.strategist == address).vaults
+    : vaults;
+
+  const formattedVaults = targetVaults.map((vault) => ({
     apyReports: vault["apyReports"],
     deposits: vault["deposits"],
     name: vault["name"],
@@ -97,7 +102,8 @@ const VaultsTable = ({ noStrategist, vaults, network }) => {
                   fV.apyReports.reduce((pV, cV) => {
                     return pV + parseInt(String(cV.apy));
                   }, 0)
-                )}%
+                )}
+                %
               </td>
               <td class="px-6 py-4">
                 ${numberWithCommas(parseInt(String(fV.deposits.usd)))}

@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import ConnectWallet from "../wallet/ConnectWallet";
 import AccountWidget from "../wallet/AccountWidget";
 import Balances from "../wallet/Balances";
+import { ethers } from "ethers";
 
 const Sidebar = ({ mobile }) => {
-  const connected = true;
+  const [connected, setConnected] = useState(true);
+
+  useEffect(() => {
+    if (typeof window.ethereum !== "undefined") {
+      console.log("MetaMask is installed!");
+    }
+  }, []);
 
   const [expanded, setExpanded] = useState(mobile ? false : true);
 
@@ -19,15 +26,15 @@ const Sidebar = ({ mobile }) => {
       >
         {connected ? (
           <>
-            <AccountWidget />
+            <AccountWidget address={window.ethereum.selectedAddress} />
             <Balances />
           </>
         ) : (
-          <ConnectWallet />
+          <ConnectWallet setConnected={setConnected} connected={connected} />
         )}
       </div>
     </div>
   );
 };
 
-export default Sidebar
+export default Sidebar;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
 const useConnect = () => {
-  const [isConnect, setIsConnect] = useState(false);
+  /*const [isConnect, setIsConnect] = useState(false);
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -25,7 +25,7 @@ const useConnect = () => {
   return {
     requestAccess,
     isConnect,
-  };
+  };*/
 };
 
 export default useConnect;

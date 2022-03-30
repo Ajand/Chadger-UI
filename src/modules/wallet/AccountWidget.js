@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-
+import AddressResolver from "../common/AddressResolver";
 import EthereumLogo from "../common/EthereumLogo";
 import ArbitrumLogo from "../common/ArbitrumLogo";
 import PolygonLogo from "../common/PolygonLogo";
@@ -8,18 +8,13 @@ import FantomLogo from "../common/FantomLogo";
 import useOuterClick from "../utilities/useOuterClick";
 
 const AccountWidget = () => {
-  const walletAddress = "0x4A87a2A017Be7feA0F37f03F3379d43665486Ff8";
-  const ens = "ajand.eth";
+
 
   const [network, setNetwork] = useState("mainnet");
 
   const [open, setOpen] = useState(false);
 
-  const formatAddress = (address) =>
-    `${address.substring(0, 5)}...${address.substring(
-      address.length - 3,
-      address.length - 1
-    )}`;
+
 
   const explorerAddress = `https://etherscan.io/`;
 
@@ -32,10 +27,10 @@ const AccountWidget = () => {
       <div className="flex justify-between">
         <a
           className="text-gray-50 font-mono text-lg hover:text-yellow-200"
-          href={`${explorerAddress}address/${walletAddress}`}
+          href={`${explorerAddress}address/${window.ethereum?.selectedAddress}`}
           target="_blank"
         >
-          {ens ? ens : formatAddress(walletAddress)}
+          <AddressResolver address={window.ethereum?.selectedAddress} />
         </a>
         <div className="relative" ref={menuRef}>
           <span

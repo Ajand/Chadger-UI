@@ -1,11 +1,15 @@
-// TODO add pagination
-// TODO add deposits
 import { useNavigate } from "react-router-dom";
+import AddressResolver from "../common/AddressResolver";
 
-const StrategistsTable = () => {
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+const StrategistsTable = ({ strategists }) => {
   const navigate = useNavigate();
 
   const strategistAddress = "qwe12";
+
+  console.log(strategists);
 
   return (
     <div class="relative overflow-x-auto shadow-md font-mono">
@@ -22,25 +26,51 @@ const StrategistsTable = () => {
               Total TVL
             </th>
             <th scope="col" class="px-6 py-3">
-              Total APY
+              Max APY
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            onClick={() => navigate(`/strategist/${strategistAddress}`)}
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
-          >
-            <th
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+          {strategists.map((strategist) => (
+            <tr
+              onClick={() => navigate(`/strategist/${strategist.strategist}`)}
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
+              key={strategist._id}
             >
-              ajand.eth
-            </th>
-            <td class="px-6 py-4">15</td>
-            <td class="px-6 py-4">$56,238</td>
-            <td class="px-6 py-4">1,560%</td>
-          </tr>
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+              >
+                <AddressResolver address={strategist.strategist} />
+              </th>
+              <td class="px-6 py-4">{strategist.vaults.length}</td>
+              <td class="px-6 py-4">
+                $
+                {numberWithCommas(
+                  strategist.vaults.reduce((pV, cV) => {
+                    return (
+                      pV +
+                      cV.apyReports.reduce((pV, cV) => {
+                        return pV + parseInt(String(cV.apy));
+                      }, 0)
+                    );
+                  }, 0)
+                )}
+              </td>
+              <td class="px-6 py-4">
+                {numberWithCommas(
+                  strategist.vaults
+                    .map((vault) =>
+                      vault.apyReports.reduce((pV, cV) => {
+                        return pV + parseInt(String(cV.apy));
+                      }, 0)
+                    )
+                    .sort((a, b) => b - a)[0]
+                )}
+                %
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
