@@ -1,8 +1,10 @@
 const YourRoles = ({ vault, userAddress }) => {
+  console.log(userAddress, vault.keeper)
+
   if (
-    vault.strategist !== userAddress ||
-    vault.guardian !== userAddress ||
-    vault.keeper !== userAddress
+    vault.strategist != userAddress &&
+    vault.guardian != userAddress &&
+    vault.keeper != userAddress
   )
     return <div></div>;
   return (

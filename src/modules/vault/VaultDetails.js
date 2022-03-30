@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import ChadgerRegistry from "../api/Contracts/ChadgerRegistry.json";
 import { Col, Row } from "react-grid-system";
+import ReactMarkdown from "react-markdown";
 
 import VaultInfo from "./VaultInfo";
 import VaultTabs from "./VaultTabs";
@@ -22,6 +23,9 @@ const VaultDetails = ({ network }) => {
   const [vault, setVault] = useState(null);
   const [userAddress, setUserAddress] = useState(null);
 
+  const [userGuide, setUserGuide] = useState("");
+  const [strategyDiagram, setStrategyDiagram] = useState("");
+
   useEffect(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
@@ -36,8 +40,16 @@ const VaultDetails = ({ network }) => {
 
     const signerAddress = await signer.getAddress();
     setUserAddress(signerAddress);
+    const vault = await cCo.getVaultDetails(id, signerAddress);
+    setVault(vault);
 
-    setVault(await cCo.getVaultDetails(id, signerAddress));
+    axios
+      .get(`https://ipfs.io/ipfs/${vault.metaPointer}`)
+      .then((r) => {
+        setUserGuide(r.data.userGuide);
+        setStrategyDiagram(r.data.strategyDiagram);
+      })
+      .catch((err) => console.log(err));
 
     setLoading(false);
   }, []);
@@ -66,6 +78,16 @@ const VaultDetails = ({ network }) => {
                   <VaultBasics vault={vault} network={network} />
                   <VaultRewards vault={vault} network={network} />
                 </>
+              )}
+              {tab === 1 && (
+                <ReactMarkdown className="font-mono mt-4 text-gray-900 dark:text-gray-300">
+                  {userGuide}
+                </ReactMarkdown>
+              )}
+              {tab === 2 && (
+                <ReactMarkdown className="font-mono  mt-4 text-gray-900 dark:text-gray-300">
+                  {strategyDiagram}
+                </ReactMarkdown>
               )}
             </Col>
           </Row>
