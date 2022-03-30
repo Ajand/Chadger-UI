@@ -20,6 +20,7 @@ const VaultDetails = ({ network }) => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [vault, setVault] = useState(null);
+  const [userAddress, setUserAddress] = useState(null);
 
   useEffect(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -34,6 +35,7 @@ const VaultDetails = ({ network }) => {
     );
 
     const signerAddress = await signer.getAddress();
+    setUserAddress(signerAddress);
 
     setVault(await cCo.getVaultDetails(id, signerAddress));
 
@@ -69,7 +71,7 @@ const VaultDetails = ({ network }) => {
           </Row>
         </Col>
         <Col lg={4}>
-          <YourRoles />
+          <YourRoles vault={vault} userAddress={userAddress} />
           <RoleActions />
         </Col>
       </Row>
