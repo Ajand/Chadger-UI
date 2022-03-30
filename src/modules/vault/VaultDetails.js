@@ -4,6 +4,7 @@ import { Col, Row } from "react-grid-system";
 import VaultInfo from "./VaultInfo";
 import VaultTabs from "./VaultTabs";
 import VaultBasics from "./VaultBasics";
+import VaultRewards from "./VaultRewards";
 
 const VaultDetails = () => {
   const [tab, setTab] = useState(0);
@@ -21,7 +22,12 @@ const VaultDetails = () => {
           <Row>
             <Col lg={12}>
               <VaultTabs tab={tab} setTab={setTab} />
-              {tab === 0 && <VaultBasics />}
+              {tab === 0 && (
+                <>
+                  <VaultBasics />
+                  <VaultRewards />
+                </>
+              )}
             </Col>
           </Row>
         </Col>
