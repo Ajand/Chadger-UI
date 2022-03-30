@@ -6,6 +6,8 @@ import VaultTabs from "./VaultTabs";
 import VaultBasics from "./VaultBasics";
 import VaultRewards from "./VaultRewards";
 
+import BasicActions from "./BasicActions";
+
 const VaultDetails = () => {
   const [tab, setTab] = useState(0);
 
@@ -15,7 +17,9 @@ const VaultDetails = () => {
         <Col lg={8}>
           <VaultInfo />
         </Col>
-        <Col lg={4}></Col>
+        <Col lg={4}>
+          <BasicActions />
+        </Col>
       </Row>
       <Row>
         <Col lg={8}>
