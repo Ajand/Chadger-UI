@@ -1,7 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 // TODO add pagination
 // TODO add deposits
 
 const VaultsTable = ({ noStrategist }) => {
+  const navigate = useNavigate();
+
+  const vaultId = "123";
+
   return (
     <div class="relative overflow-x-auto shadow-md font-mono">
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -34,7 +40,10 @@ const VaultsTable = ({ noStrategist }) => {
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer ">
+          <tr
+            onClick={() => navigate(`/vault/${vaultId}`)}
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer "
+          >
             {!noStrategist && (
               <th
                 scope="row"

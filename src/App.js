@@ -6,12 +6,11 @@ import { Visible, Hidden } from "react-grid-system";
 import { BrowserRouter } from "react-router-dom";
 
 function App() {
-  console.log(chains);
 
   return (
     <BrowserRouter>
       <div className="dark">
-        <div class="bg-grey dark:bg-gray-900 w-full min-h-screen ">
+        <div class="bg-gray-200 dark:bg-gray-900 w-full min-h-screen ">
           <Visible xs sm md>
             <Mobile />
           </Visible>

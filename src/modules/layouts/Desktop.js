@@ -12,6 +12,9 @@ import StrategistInfo from "../strategists/StrategistInfo";
 
 import AddVault from "../vault/AddVault";
 
+import VaultDetails from "../vault/VaultDetails";
+
+
 const Desktop = () => {
   return (
     <div className="flex ">
@@ -61,6 +64,17 @@ const Desktop = () => {
               <>
                 <div className="m-10  ">
                   <AddVault />
+                </div>
+              </>
+            }
+          />
+
+          <Route
+            path="/vault/:id"
+            element={
+              <>
+                <div className="m-10  ">
+                  <VaultDetails />
                 </div>
               </>
             }
