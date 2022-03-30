@@ -22,6 +22,7 @@ import ChadgerRegistry from "../api/Contracts/ChadgerRegistry.json";
 const Desktop = () => {
   const [vaultsSummary, setVS] = useState([]);
   const [loadingVaults, setLoadingVaults] = useState(true);
+  const [registry, setRegistry] = useState(null);
 
   const network = {
     blockExplorer: "https://etherscan.io",
@@ -39,8 +40,10 @@ const Desktop = () => {
     const cCo = new ethers.Contract(
       chadgerAddress,
       ChadgerRegistry.abi,
-      provider
+      signer
     );
+
+    setRegistry(cCo);
 
     setVS(await cCo.getVaultsSummary(await signer.getAddress()));
 
@@ -97,7 +100,7 @@ const Desktop = () => {
               element={
                 <>
                   <div className="m-10  ">
-                    <AddVault />
+                    <AddVault registry={registry} />
                   </div>
                 </>
               }
