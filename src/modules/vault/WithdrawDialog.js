@@ -4,12 +4,11 @@ import { ethers } from "ethers";
 import ERC20 from "../api/Contracts/ERC20.json";
 import Vault from "../api/Contracts/Vault.json";
 
-const ApproveOrDepositDialog = ({ vault, setVault, network }) => {
-  const [allowance, setAllowance] = useState(0);
+const WithdrawDialog = ({ vault, setVault, network }) => {
   const [loading, setLoading] = useState(true);
-  const [amount, setAmount] = useState(0);
-  const [token, setToken] = useState(null);
   const [vaultC, setVaultC] = useState(null);
+  const [balance, setBalance] = useState(0);
+  const [amount, setAmount] = useState(0);
 
   useEffect(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -20,30 +19,17 @@ const ApproveOrDepositDialog = ({ vault, setVault, network }) => {
 
     const signer = provider.getSigner();
 
-    const TokenContract = new ethers.Contract(
-      vault.token.tokenAddress,
-      ERC20.abi,
-      signer
-    );
-
     const VaultContract = new ethers.Contract(
       vault.vaultAddress,
       Vault.abi,
       signer
     );
 
-    setToken(TokenContract);
     setVaultC(VaultContract);
 
     const signerAddress = await signer.getAddress();
 
-    console.log(String(await VaultContract.balanceOf(signerAddress)));
-
-    console.log(vault.vaultAddress);
-
-    setAllowance(
-      await TokenContract.allowance(signerAddress, vault.vaultAddress)
-    );
+    setBalance(await VaultContract.balanceOf(signerAddress));
 
     setLoading(false);
   }, []);
@@ -66,10 +52,9 @@ const ApproveOrDepositDialog = ({ vault, setVault, network }) => {
         ) : (
           <div className="flex flex-col justify-between h-full">
             <div>
-              Your allowance amount is:{" "}
-              <span className="text-yellow-300">{String(allowance)}</span>{" "}
-              <br /> This the maximum amount you can deposit. You can also
-              increase your allowance here.
+              Your vault balance is:{" "}
+              <span className="text-yellow-300">{String(balance)}</span> <br />{" "}
+              This the maximum amount you can withdraw.
             </div>
             <div class="mb-6 mt-6 ">
               <label
@@ -94,39 +79,23 @@ const ApproveOrDepositDialog = ({ vault, setVault, network }) => {
                 }
               />
             </div>
-            <div className="flex justify-between ">
+            <div className="flex justify-between flex-row-reverse ">
               <button
                 onClick={async () => {
-                  if (amount > 0) {
-                    await token.increaseAllowance(vault.vaultAddress, amount);
-                    setVault(null);
-                  }
-                }}
-                className="text-white bg-blue-600 hover:bg-blue-700  focus:outline-none focus:ring-blue-300 font-medium  text-sm w-full sm:w-auto px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Increase Allowance
-              </button>
-              <button
-                onClick={async () => {
-                  if (amount > 0) {
-                    console.log(vaultC);
-                    if (parseInt(String(allowance)) >= amount) {
-                      try {
-                        await vaultC["deposit(uint256)"](amount);
-                        setVault(null);
-                      } catch (err) {
-                        console.log(err);
-                      }
+                  if (balance > 0) {
+                    if (parseInt(String(balance)) >= amount) {
+                      await vaultC["withdraw(uint256)"](amount);
+                      setVault(null);
                     }
                   }
                 }}
                 className={`${
-                  amount > parseInt(String(allowance))
+                  amount > parseInt(String(balance))
                     ? "cursor-not-allowed"
                     : "dark:hover:bg-blue-700 hover:bg-blue-700"
                 } text-white bg-blue-600   focus:outline-none focus:ring-blue-300 font-medium  text-sm w-full sm:w-auto px-5 py-2 text-center dark:bg-blue-600  dark:focus:ring-blue-800`}
               >
-                Deposit
+                Withdraw
               </button>
             </div>
           </div>
@@ -136,4 +105,4 @@ const ApproveOrDepositDialog = ({ vault, setVault, network }) => {
   );
 };
 
-export default ApproveOrDepositDialog;
+export default WithdrawDialog;

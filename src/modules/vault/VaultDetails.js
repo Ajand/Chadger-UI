@@ -6,6 +6,7 @@ import ChadgerRegistry from "../api/Contracts/ChadgerRegistry.json";
 import { Col, Row } from "react-grid-system";
 import ReactMarkdown from "react-markdown";
 import ApproveOrDepositDialog from "./ApproveOrDepositDialog";
+import WithdrawDialog from "./WithdrawDialog";
 
 import VaultInfo from "./VaultInfo";
 import VaultTabs from "./VaultTabs";
@@ -28,6 +29,7 @@ const VaultDetails = ({ network }) => {
   const [strategyDiagram, setStrategyDiagram] = useState("");
 
   const [aod, setAod] = useState(null);
+  const [wd, setWd] = useState(null);
 
   useEffect(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -59,21 +61,16 @@ const VaultDetails = ({ network }) => {
 
   if (loading) return <div>Loading ...</div>;
 
-
   return (
     <div>
-      {aod && (
-        <ApproveOrDepositDialog
-          vault={vault}
-          setVault={setAod}
-        />
-      )}
+      {aod && <ApproveOrDepositDialog vault={vault} setVault={setAod} />}
+      {wd && <WithdrawDialog vault={vault} setVault={setWd} />}
       <Row>
         <Col lg={8}>
           <VaultInfo vault={vault} />
         </Col>
         <Col lg={4}>
-          <BasicActions setAod={setAod} />
+          <BasicActions setAod={setAod} setWd={setWd} />
         </Col>
       </Row>
       <Row>

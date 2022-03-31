@@ -1,4 +1,4 @@
-const BasicActions = ({ setAod, vault }) => {
+const BasicActions = ({ setAod, setWd }) => {
   return (
     <div>
       <div className="text-violet-800 pb-2 dark:text-yellow-300 font-mono text-lg border-b border-violet-300 dark:border-violet-900">
@@ -15,6 +15,7 @@ const BasicActions = ({ setAod, vault }) => {
         <button
           type="button"
           class="text-white text-center bg-violet-700 hover:bg-violet-800  text-md px-2 py-1 mr-2  dark:bg-violet-600  focus:outline-none "
+          onClick={() => setWd(true)}
         >
           Withdraw
         </button>

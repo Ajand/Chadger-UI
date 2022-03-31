@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 // TODO add pagination
 // TODO add deposits
 import ApproveOrDepositDialog from "./ApproveOrDepositDialog";
+import WithdrawDialog from "./WithdrawDialog";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -19,6 +20,7 @@ const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
   const { address } = useParams();
 
   const [aod, setAod] = useState(null);
+  const [wd, setWd] = useState(null);
 
   const vaultId = "123";
 
@@ -44,6 +46,12 @@ const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
         <ApproveOrDepositDialog
           vault={formattedVaults.find((vaults) => vaults.vaultAddress === aod)}
           setVault={setAod}
+        />
+      )}
+      {wd && (
+        <WithdrawDialog
+          vault={formattedVaults.find((vaults) => vaults.vaultAddress === wd)}
+          setVault={setWd}
         />
       )}
       <div class="relative overflow-x-auto shadow-md font-mono">
@@ -131,6 +139,10 @@ const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
                   <button
                     type="button"
                     class="text-white text-center bg-blue-700 hover:bg-blue-800  text-xs px-2 py-1 mr-2 mb-2 dark:bg-blue-600  focus:outline-none "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setWd(fV.vaultAddress);
+                    }}
                   >
                     Withdraw
                   </button>
