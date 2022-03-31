@@ -66,15 +66,16 @@ const ConnectWallet = ({ setConnected }) => {
                     window.ethereum
                   );
 
+                  console.log(provider);
+
                   // MetaMask requires requesting permission to connect users accounts
                   await provider.send("eth_requestAccounts", []);
 
-                  connector
-                    .requestAccess()
-                    .then((r) => setConnected(true))
-                    .catch((err) => {
-                      console.log(err);
-                    });
+                  await window.ethereum.request({
+                    method: "wallet_switchEthereumChain",
+                    params: [{ chainId: `0x4` }], // chainId must be in hexadecimal numbers
+                  });
+                  setConnected(true);
                 }}
                 class=" border-2  border-violet-300 bg-violet-50 box-border hover:bg-violet-200 duration-200  font-mono py-2 px-2 "
               >

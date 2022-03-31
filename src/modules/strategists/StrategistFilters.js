@@ -1,14 +1,18 @@
 import { useState } from "react";
 import useOuterClick from "../utilities/useOuterClick";
 
-const StrategistFilters = () => {
+const StrategistFilters = ({
+  sortBy,
+  setSortBy,
+  searchString,
+  setSearchString,
+}) => {
   const sortOptions = [
     { label: "Vaults", value: "vaults" },
     { label: "TTVL", value: "tvl" },
-    { label: "TAPY", value: "apy" },
+    { label: "MAPY", value: "apy" },
   ];
 
-  const [sortBy, setSortBy] = useState("vaults");
   const [sortExpand, setSortExpand] = useState(false);
 
   const sortByRef = useOuterClick((ev) => {
@@ -25,6 +29,8 @@ const StrategistFilters = () => {
                 class="flex-grow font-mono outline-none bg-violet-800 text-gray-300 focus:text-yellow-300 text-sm"
                 type="text"
                 placeholder="Search Address, Vault, ..."
+                onChange={(e) => setSearchString(e.target.value)}
+                value={searchString}
               />
               <span>
                 <svg

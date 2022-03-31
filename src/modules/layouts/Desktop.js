@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import BeatLoader from "react-spinners/BeatLoader";
 
 import Sidebar from "../components/Sidebar";
 
@@ -34,9 +35,11 @@ const Desktop = () => {
   ]);
   const [searchString, setSearchString] = useState("");
 
+  const [strategistSortBy, setStrategistSortBy] = useState("vaults");
+
   const network = {
-    blockExplorer: "https://etherscan.io",
-    registryAddress: "0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8",
+    blockExplorer: "https://rinkeby.etherscan.io/",
+    registryAddress: "0x38b90de7b389cab8f303a622323be0712a96d604",
   };
 
   useEffect(async () => {
@@ -53,6 +56,11 @@ const Desktop = () => {
       ChadgerRegistry.abi,
       signer
     );
+
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: `0x4` }], // chainId must be in hexadecimal numbers
+    });
 
     setRegistry(cCo);
 
@@ -71,9 +79,11 @@ const Desktop = () => {
       <div className="w-3/12 inline-block ">
         <Sidebar />
       </div>
-      <div className="w-9/12 inline-block ">
+      <div className="xl:w-9/12 lg:w-12/12 inline-block ">
         {loadingVaults ? (
-          <div>Loading ...</div>
+          <div className="w-full h-96 flex justify-center items-center">
+            <BeatLoader color="#4c1d95" size={30} />
+          </div>
         ) : (
           <Routes>
             <Route
@@ -105,10 +115,17 @@ const Desktop = () => {
               element={
                 <>
                   <div className="m-10">
-                    <StrategistFilters />
+                    <StrategistFilters
+                      searchString={searchString}
+                      setSearchString={setSearchString}
+                      sortBy={strategistSortBy}
+                      setSortBy={setStrategistSortBy}
+                    />
                     <StrategistsTable
                       strategists={strategists}
                       network={network}
+                      sortBy={strategistSortBy}
+                      searchString={searchString}
                     />
                   </div>
                 </>

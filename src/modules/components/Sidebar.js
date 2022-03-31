@@ -6,7 +6,7 @@ import Balances from "../wallet/Balances";
 import { ethers } from "ethers";
 
 const Sidebar = ({ mobile }) => {
-  const [connected, setConnected] = useState(true);
+  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {

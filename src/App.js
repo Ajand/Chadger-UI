@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
-      <div className="">
+      <div className="dark">
         <div class="bg-gray-200 dark:bg-gray-900 w-full min-h-screen ">
           {/*<Visible xs sm md>
             <Mobile />
