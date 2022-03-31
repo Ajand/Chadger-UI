@@ -23,6 +23,7 @@ const VaultsTable = ({
   strategists,
   sortBy,
   filters,
+  searchString,
 }) => {
   const navigate = useNavigate();
   const { address } = useParams();
@@ -50,7 +51,6 @@ const VaultsTable = ({
     }))
     .sort((b, a) => {
       if (sortBy === "tvl") {
-        console.log(a.tvl.sub(b.tvl).gte(0));
         return a.tvl.sub(b.tvl).gte(0) ? 1 : -1;
       }
       return a.apyReports
@@ -85,6 +85,24 @@ const VaultsTable = ({
         }
       }
       return doIt;
+    })
+    .filter((vault) => {
+      if (!searchString) return true;
+      return (
+        vault.token.name.toLowerCase().search(searchString.toLowerCase()) >
+          -1 ||
+        vault.token.symbol.toLowerCase().search(searchString.toLowerCase()) >
+          -1 ||
+        vault.token.tokenAddress
+          .toLowerCase()
+          .search(searchString.toLowerCase()) > -1 ||
+        vault.vaultAddress.toLowerCase().search(searchString.toLowerCase()) >
+          -1 ||
+        vault.strategist.toLowerCase().search(searchString.toLowerCase()) >
+          -1 ||
+        vault.name.toLowerCase().search(searchString.toLowerCase()) > -1 ||
+        vault.symbol.toLowerCase().search(searchString.toLowerCase()) > -1
+      );
     });
 
   return (

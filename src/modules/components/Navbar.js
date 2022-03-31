@@ -155,6 +155,10 @@ const Navbar = ({ expanded, setExpanded }) => {
             </span>
           </a>
         </div>
+        <div onClick={() => setExpanded(!expanded)} className="flex group justify-center mb-2">
+          <img src="/chadger.png" className="w-4/5 cursor-pointer" />
+        </div>
+         
       </div>
     </div>
   );

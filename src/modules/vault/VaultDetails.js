@@ -7,6 +7,7 @@ import { Col, Row } from "react-grid-system";
 import ReactMarkdown from "react-markdown";
 import ApproveOrDepositDialog from "./ApproveOrDepositDialog";
 import WithdrawDialog from "./WithdrawDialog";
+import BeatLoader from "react-spinners/BeatLoader";
 
 import VaultInfo from "./VaultInfo";
 import VaultTabs from "./VaultTabs";
@@ -59,7 +60,12 @@ const VaultDetails = ({ network }) => {
     setLoading(false);
   }, []);
 
-  if (loading) return <div>Loading ...</div>;
+  if (loading)
+    return (
+      <div className="w-full h-96 flex justify-center items-center">
+        <BeatLoader color="#4c1d95" size={30} />
+      </div>
+    );
 
   return (
     <div>

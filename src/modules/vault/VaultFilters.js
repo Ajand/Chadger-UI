@@ -1,7 +1,14 @@
 import { useState } from "react";
 import useOuterClick from "../utilities/useOuterClick";
 
-const VaultFilters = ({ filters, changeFilters, sortBy, setSortBy }) => {
+const VaultFilters = ({
+  filters,
+  changeFilters,
+  sortBy,
+  setSortBy,
+  searchString,
+  setSearchString,
+}) => {
   const sortOptions = [
     { label: "TVL", value: "tvl" },
     { label: "APY", value: "apy" },
@@ -23,6 +30,8 @@ const VaultFilters = ({ filters, changeFilters, sortBy, setSortBy }) => {
                 class="flex-grow font-mono outline-none bg-violet-800 text-gray-300 focus:text-yellow-300 text-sm"
                 type="text"
                 placeholder="Search Vaults, Tokens, Addresses, ..."
+                onChange={(e) => setSearchString(e.target.value)}
+                value={searchString}
               />
               <span>
                 <svg
@@ -92,6 +101,18 @@ const VaultFilters = ({ filters, changeFilters, sortBy, setSortBy }) => {
           </div>
         ))}
       </div>
+      {filters.find((f) => f.value === "staging").checked && (
+        <div className="p-2 border-t border-violet-700 font-mono text-xs text-gray-200">
+          Be careful using vaults that are on staging status, they are not been
+          vetted by BadgerDAO. Ape at your own risks.
+        </div>
+      )}
+      {filters.find((f) => f.value === "deprecated").checked && (
+        <div className="p-2 border-t border-violet-700 font-mono text-xs text-gray-200">
+          There is a reason why some vaults are deprecated. Don't use them
+          unless you know what you're doing.
+        </div>
+      )}
     </div>
   );
 };

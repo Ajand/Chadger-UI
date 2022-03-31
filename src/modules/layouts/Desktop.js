@@ -32,6 +32,7 @@ const Desktop = () => {
     { label: "Staging", value: "staging", checked: true },
     { label: "Deprecated", value: "deprecated", checked: false },
   ]);
+  const [searchString, setSearchString] = useState("");
 
   const network = {
     blockExplorer: "https://etherscan.io",
@@ -85,12 +86,15 @@ const Desktop = () => {
                       changeFilters={changeFilters}
                       sortBy={sortBy}
                       setSortBy={setSortBy}
+                      searchString={searchString}
+                      setSearchString={setSearchString}
                     />
                     <VaultsTable
                       vaults={vaultsSummary}
                       network={network}
                       filters={filters}
                       sortBy={sortBy}
+                      searchString={searchString}
                     />
                   </div>
                 </>
@@ -116,11 +120,21 @@ const Desktop = () => {
                 <>
                   <div className="m-10">
                     <StrategistInfo strategists={strategists} />
-                    <VaultFilters />
+                    <VaultFilters
+                      filters={filters}
+                      changeFilters={changeFilters}
+                      sortBy={sortBy}
+                      setSortBy={setSortBy}
+                      searchString={searchString}
+                      setSearchString={setSearchString}
+                    />
                     <VaultsTable
                       noStrategist
                       strategists={strategists}
                       network={network}
+                      filters={filters}
+                      sortBy={sortBy}
+                      searchString={searchString}
                     />
                   </div>
                 </>
