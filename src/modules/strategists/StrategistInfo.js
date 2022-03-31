@@ -38,12 +38,7 @@ const StrategistInfo = ({ strategists }) => {
             <p>
               {numberWithCommas(
                 strategist.vaults.reduce((pV, cV) => {
-                  return (
-                    pV +
-                    cV.apyReports.reduce((pV, cV) => {
-                      return pV + parseInt(String(cV.apy));
-                    }, 0)
-                  );
+                  return pV + parseInt(cV.tvl);
                 }, 0)
               )}
               $

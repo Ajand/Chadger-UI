@@ -5,6 +5,7 @@ const AddressResolver = ({ address, ...rest }) => {
       address.length
     )}`;
 
+  if (!address) return <div {...rest}></div>;
   return <div {...rest}>{beautifyAddress(address)}</div>;
 };
 

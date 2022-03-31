@@ -5,6 +5,7 @@ import axios from "axios";
 import ChadgerRegistry from "../api/Contracts/ChadgerRegistry.json";
 import { Col, Row } from "react-grid-system";
 import ReactMarkdown from "react-markdown";
+import ApproveOrDepositDialog from "./ApproveOrDepositDialog";
 
 import VaultInfo from "./VaultInfo";
 import VaultTabs from "./VaultTabs";
@@ -25,6 +26,8 @@ const VaultDetails = ({ network }) => {
 
   const [userGuide, setUserGuide] = useState("");
   const [strategyDiagram, setStrategyDiagram] = useState("");
+
+  const [aod, setAod] = useState(null);
 
   useEffect(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -56,16 +59,21 @@ const VaultDetails = ({ network }) => {
 
   if (loading) return <div>Loading ...</div>;
 
-  console.log(vault);
 
   return (
     <div>
+      {aod && (
+        <ApproveOrDepositDialog
+          vault={vault}
+          setVault={setAod}
+        />
+      )}
       <Row>
         <Col lg={8}>
           <VaultInfo vault={vault} />
         </Col>
         <Col lg={4}>
-          <BasicActions />
+          <BasicActions setAod={setAod} />
         </Col>
       </Row>
       <Row>
