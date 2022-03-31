@@ -25,6 +25,14 @@ const Desktop = () => {
   const [loadingVaults, setLoadingVaults] = useState(true);
   const [registry, setRegistry] = useState(null);
 
+  const [sortBy, setSortBy] = useState("tvl");
+  const [filters, changeFilters] = useState([
+    { label: "My Deposits", value: "deposits", checked: false },
+    { label: "Production", value: "production", checked: true },
+    { label: "Staging", value: "staging", checked: true },
+    { label: "Deprecated", value: "deprecated", checked: false },
+  ]);
+
   const network = {
     blockExplorer: "https://etherscan.io",
     registryAddress: "0xf4B146FbA71F41E0592668ffbF264F1D186b2Ca8",
@@ -72,8 +80,18 @@ const Desktop = () => {
               element={
                 <>
                   <div className="m-10">
-                    <VaultFilters />
-                    <VaultsTable vaults={vaultsSummary} network={network} />
+                    <VaultFilters
+                      filters={filters}
+                      changeFilters={changeFilters}
+                      sortBy={sortBy}
+                      setSortBy={setSortBy}
+                    />
+                    <VaultsTable
+                      vaults={vaultsSummary}
+                      network={network}
+                      filters={filters}
+                      sortBy={sortBy}
+                    />
                   </div>
                 </>
               }

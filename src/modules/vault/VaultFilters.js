@@ -1,25 +1,17 @@
 import { useState } from "react";
 import useOuterClick from "../utilities/useOuterClick";
 
-const VaultFilters = () => {
+const VaultFilters = ({ filters, changeFilters, sortBy, setSortBy }) => {
   const sortOptions = [
     { label: "TVL", value: "tvl" },
     { label: "APY", value: "apy" },
   ];
 
-  const [sortBy, setSortBy] = useState("tvl");
   const [sortExpand, setSortExpand] = useState(false);
 
   const sortByRef = useOuterClick((ev) => {
     setSortExpand(false);
   });
-
-  const [filters, changeFilters] = useState([
-    { label: "My Deposits", value: "deposits", checked: false },
-    { label: "Production", value: "production", checked: true },
-    { label: "Staging", value: "staging", checked: true },
-    { label: "Deprecated", value: "deprecated", checked: false },
-  ]);
 
   return (
     <div className="bg-violet-800">

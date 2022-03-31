@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 // TODO add deposits
 import ApproveOrDepositDialog from "./ApproveOrDepositDialog";
 import WithdrawDialog from "./WithdrawDialog";
+import { ethers } from "ethers";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -15,7 +16,14 @@ const beautifyAddress = (address) =>
     address.length
   )}`;
 
-const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
+const VaultsTable = ({
+  noStrategist,
+  vaults,
+  network,
+  strategists,
+  sortBy,
+  filters,
+}) => {
   const navigate = useNavigate();
   const { address } = useParams();
 
@@ -28,17 +36,56 @@ const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
     ? strategists.find((str) => str.strategist == address).vaults
     : vaults;
 
-  const formattedVaults = targetVaults.map((vault) => ({
-    apyReports: vault["apyReports"],
-    deposits: vault["deposits"],
-    name: vault["name"],
-    symbol: vault["symbol"],
-    strategist: vault["strategist"],
-    token: vault["token"],
-    tvl: vault["tvl"],
-    vaultAddress: vault["vaultAddress"],
-    status: vault["status"],
-  }));
+  const formattedVaults = targetVaults
+    .map((vault) => ({
+      apyReports: vault["apyReports"],
+      deposits: vault["deposits"],
+      name: vault["name"],
+      symbol: vault["symbol"],
+      strategist: vault["strategist"],
+      token: vault["token"],
+      tvl: vault["tvl"],
+      vaultAddress: vault["vaultAddress"],
+      status: vault["status"],
+    }))
+    .sort((b, a) => {
+      if (sortBy === "tvl") {
+        console.log(a.tvl.sub(b.tvl).gte(0));
+        return a.tvl.sub(b.tvl).gte(0) ? 1 : -1;
+      }
+      return a.apyReports
+        .reduce((pV, cV) => {
+          return cV.apy.add(pV);
+        }, 0)
+        .sub(
+          b.apyReports.reduce((pV, cV) => {
+            return cV.apy.add(pV);
+          }, 0)
+        )
+        .gte(0)
+        ? 1
+        : -1;
+    })
+    .filter((vault) => {
+      if (filters.find((f) => f.value === "deposits").checked) {
+        return vault.deposits.usd.gt(0);
+      }
+      let doIt = false;
+      if (filters.find((f) => f.value === "production").checked) {
+        doIt = vault.status === 1;
+      }
+      if (filters.find((f) => f.value === "staging").checked) {
+        if (!doIt) {
+          doIt = vault.status === 0;
+        }
+      }
+      if (filters.find((f) => f.value === "deprecated").checked) {
+        if (!doIt) {
+          doIt = vault.status === 2;
+        }
+      }
+      return doIt;
+    });
 
   return (
     <div>
@@ -116,9 +163,11 @@ const VaultsTable = ({ noStrategist, vaults, network, strategists }) => {
                 </td>
                 <td class="px-6 py-4">
                   {numberWithCommas(
-                    fV.apyReports.reduce((pV, cV) => {
-                      return pV + parseInt(String(cV.apy));
-                    }, 0)
+                    String(
+                      fV.apyReports.reduce((pV, cV) => {
+                        return cV.apy.add(pV);
+                      }, 0)
+                    )
                   )}
                   %
                 </td>
